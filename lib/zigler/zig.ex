@@ -164,6 +164,8 @@ defmodule Zigler.Zig do
   def fetch(version) do
     zig_dir = Path.join(@zig_dir_path, version_name(version))
     zig_executable = Path.join(zig_dir, "zig")
+    Logger.debug("looking for zig exe in #{zig_executable}")
+
     :global.set_lock({__MODULE__, self()})
     unless File.exists?(zig_executable) do
       # make sure the zig directory path exists and is ready.
@@ -183,8 +185,8 @@ defmodule Zigler.Zig do
 
       zig_download_path = Path.join(@zig_dir_path, archive)
 
-      Logger.info("downloading zig version #{version} and caching in #{@zig_dir_path}.")
       download_location = "https://ziglang.org/download/#{version}/#{archive}"
+      Logger.info("downloading zig version #{version} from #{download_location} and caching in #{@zig_dir_path}.")
       download_zig_archive(zig_download_path, download_location)
 
       # untar the zig directory.
