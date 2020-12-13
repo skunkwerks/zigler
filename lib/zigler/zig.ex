@@ -18,7 +18,7 @@ defmodule Zigler.Zig do
     # apply patches, if applicable
     Patches.sync(zig_tree)
 
-    zig_executable = Path.join(zig_tree, "zig")
+    zig_executable = hd(Path.wildcard("#{ zig_tree }/zig"))
 
     opts = [cd: compiler.assembly_dir, stderr_to_stdout: true]
 
